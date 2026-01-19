@@ -1,6 +1,7 @@
 package boop.auth.service;
 
 import boop.auth.api.dto.LoginRequest;
+import boop.auth.api.dto.OtpVerifyRequest;
 import boop.auth.api.dto.TokenResponse;
 import boop.auth.otp.OtpService;
 import boop.auth.security.JwtTokenProvider;
@@ -29,11 +30,7 @@ public class AuthService {
 
         if (req.phone() != null) {
 
-            if (!otpService.verify(req.phone(), req.otp())) {
-                throw new RuntimeException("Invalid OTP");
-            }
-
-            user = userService.authenticateByPhone(req.phone(), req.otp());
+            user = userService.authenticateByPhone(req.phone(), req.password());
 
         } else if (req.email() != null) {
 
@@ -49,5 +46,26 @@ public class AuthService {
                 user.getRoles(),
                 user.getPermissions()
         ));
+    }
+
+    public void loginWithPhone(String phone)
+    {
+        userService.authenticatePetOwner(phone);
+    }
+
+    public TokenResponse verifyOtpAndLogin(String phone, String otp)
+    {
+        if(otpService.verify(phone,otp))
+        {
+            User user = userService.authenticatePetOwner(phone);
+
+            return new TokenResponse(jwt.generate(
+                    user.getId(),
+                    user.getRoles(),
+                    user.getPermissions()
+            ));
+        }
+
+        return null;
     }
 }

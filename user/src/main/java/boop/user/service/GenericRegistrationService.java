@@ -1,4 +1,4 @@
-package boop.user.application;
+package boop.user.service;
 
 import boop.user.api.dto.GenericRegistrationRequest;
 import boop.user.domain.User;

@@ -1,4 +1,4 @@
-package boop.user.application;
+package boop.user.service;
 
 import boop.user.api.dto.PhoneMandatoryRegistrationRequest;
 import boop.user.domain.User;
@@ -23,7 +23,7 @@ public class PhoneMandatoryRegistrationService {
 
         User user = new User();
         user.setPhone(req.phone());
-        user.setEmail(req.email());
+        user.setPassword(req.password());
 
         return repo.save(user);
     }

@@ -4,8 +4,8 @@ import boop.common.security.Permission;
 import boop.common.security.Role;
 import boop.user.api.dto.GenericRegistrationRequest;
 import boop.user.api.dto.PhoneMandatoryRegistrationRequest;
-import boop.user.application.GenericRegistrationService;
-import boop.user.application.PhoneMandatoryRegistrationService;
+import boop.user.service.GenericRegistrationService;
+import boop.user.service.PhoneMandatoryRegistrationService;
 import boop.user.domain.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +33,7 @@ public class RegistrationController {
         user.setPermissions(Set.of(Permission.DOCTOR_BASIC));
     }
 
-    @PostMapping("/phone-mandatory")
+    @PostMapping("/phone")
     public void registerPhoneMandatory(@RequestBody PhoneMandatoryRegistrationRequest req) {
 
         User user = phoneService.register(req);

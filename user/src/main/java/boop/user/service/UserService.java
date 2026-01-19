@@ -1,9 +1,13 @@
 package boop.user.service;
 
+import boop.common.security.Permission;
+import boop.common.security.Role;
 import boop.user.domain.User;
 import boop.user.domain.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -32,16 +36,33 @@ public class UserService {
         return user;
     }
 
-    // ---------- PHONE + OTP (STUB FOR NOW) ----------
-
-    public User authenticateByPhone(String phone, String otp) {
+    public User authenticateByPhone(String phone, String rawPassword) {
 
         User user = repo.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("Invalid phone number"));
+                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
 
-        // OTP validation will be implemented later
-        // For now, we assume OTP is valid if user exists
+        if (user.getPassword() == null ||
+                !encoder.matches(rawPassword, user.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
 
         return user;
+    }
+
+    // ---------- PHONE + OTP (STUB FOR NOW) ----------
+
+    public User authenticatePetOwner(String phone) {
+
+        return repo.findByPhone(phone)
+                .orElseGet(() -> {
+                    User user = new User();
+                    user.setPhone(phone);
+                    user.setPassword(null); // OTP-only user
+                    user.setRoles(Set.of(Role.ROLE_PET_OWNER));
+                    user.setPermissions(Set.of(Permission.PET_OWNER_FULL));
+                    return repo.save(user);
+                });
+
+        // OTP validation will be implemented later
     }
 }
