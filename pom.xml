@@ -37,6 +37,7 @@
 
     <!-- Security -->
     <jjwt.version>0.11.5</jjwt.version>
+    <oauth.version>6.2.1</oauth.version>
 
     <!-- Build -->
     <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
@@ -45,6 +46,37 @@
   <!-- Dependency Management -->
   <dependencyManagement>
     <dependencies>
+      <!-- Internal Modules -->
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>auth</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>user</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>order</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>appointment</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>medical</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- Spring Boot BOM -->
       <dependency>
@@ -74,6 +106,25 @@
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-api</artifactId>
         <version>${jjwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>${jjwt.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>${jjwt.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-oauth2-client</artifactId>
+        <version>${oauth.version}</version>
       </dependency>
 
     </dependencies>

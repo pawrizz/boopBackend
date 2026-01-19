@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boop – Temporary Auth</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h2>🐾 Boop Pet Care (Temporary UI)</h2>
+
+<hr>
+
+<h3>Register (Phone Mandatory)</h3>
+<input type="text" id="regPhone" placeholder="Phone number" />
+<input type="text" id="regEmail" placeholder="Email (optional)" />
+<input type="password" id="regPassword" placeholder="Password" />
+<br><br>
+<button onclick="register()">Register</button>
+
+<p id="regResult"></p>
+
+<hr>
+
+<h3>Login (Phone + OTP)</h3>
+<input type="text" id="loginPhone" placeholder="Phone number" />
+<input type="text" id="loginOtp" placeholder="OTP (use 123456)" />
+<br><br>
+<button onclick="login()">Login</button>
+
+<p id="loginResult"></p>
+
+<script>
+    function register() {
+        fetch("/register-temp", {
+            method: "POST"
+        })
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById("regResult").innerText = data;
+        });
+    }
+
+    function login() {
+        const phone = document.getElementById("loginPhone").value;
+        const otp = document.getElementById("loginOtp").value;
+
+        fetch("/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                phone: phone,
+                otp: otp
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("loginResult").innerText =
+                "JWT Token:\n" + data.token;
+        })
+        .catch(() => {
+            document.getElementById("loginResult").innerText =
+                "Login failed";
+        });
+    }
+</script>
+
+</body>
+</html>

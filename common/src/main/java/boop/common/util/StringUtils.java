@@ -1,4 +1,4 @@
-package com.boop.common.util;
+package boop.common.util;
 
 public final class StringUtils {
     private StringUtils() {}

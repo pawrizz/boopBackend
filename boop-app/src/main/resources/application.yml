@@ -3,12 +3,24 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/boopdb
-    username: boop
-    password: secret
+    url: jdbc:h2:mem:boopdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+security:
+  jwt:
+    secret: boop-secret-key-change-later
+    expiry-ms: 86400000
+

@@ -19,7 +19,44 @@
   <description>Authentication and authorization module</description>
 
   <dependencies>
-    <!-- e.g. JWT, Spring Security -->
+      <!-- Internal Modules-->
+      <dependency>
+          <groupId>boop</groupId>
+          <artifactId>common</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>boop</groupId>
+          <artifactId>user</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+      </dependency>
+
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-oauth2-client</artifactId>
+      </dependency>
+
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
+          <scope>provided</scope>
+      </dependency>
+
+
   </dependencies>
 
 </project>
