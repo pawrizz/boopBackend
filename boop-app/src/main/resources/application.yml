@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/boop?currentSchema=boop
-    username: postgres
-    password: test
+    url: jdbc:postgresql://localhost:5432/boop?currentSchema=public
+    username: debug
+    password: debug
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -16,7 +16,7 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: boop
+        default_schema: public
 
 
 

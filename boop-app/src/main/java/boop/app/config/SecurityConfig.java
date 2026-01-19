@@ -30,6 +30,7 @@ public class SecurityConfig {
                         "/auth/**",
                         "/register-temp",
                         "/login-temp",
+                        "/swagger-ui/**",
                         "/h2-console/**"
                 ).permitAll()
                 .anyRequest().authenticated()
