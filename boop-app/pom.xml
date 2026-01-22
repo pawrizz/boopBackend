@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version></version>
+    <version>3.2.1</version>
   </parent>
 
 
@@ -20,6 +20,13 @@
 
   <!-- boop-app is the only Spring Boot application and depends on all domain modules -->
   <dependencies>
+    <dependency>
+      <groupId>boop</groupId>
+      <artifactId>boop-care</artifactId>
+      <version>1.0.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
     <!-- Spring Boot starters (version managed by parent dependencyManagement) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -30,26 +37,32 @@
     <dependency>
       <groupId>boop</groupId>
       <artifactId>common</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>boop</groupId>
       <artifactId>auth</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>boop</groupId>
       <artifactId>user</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>boop</groupId>
       <artifactId>order</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>boop</groupId>
       <artifactId>appointment</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>boop</groupId>
       <artifactId>medical</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
     <dependency>
@@ -57,20 +70,18 @@
       <artifactId>postgresql</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>2.3.0</version>
     </dependency>
-
-
-
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.42</version>
+      <scope>provided</scope>
+    </dependency>
 
   </dependencies>
 

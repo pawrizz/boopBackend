@@ -9,7 +9,6 @@
     <groupId>boop</groupId>
     <artifactId>boop-care</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>order</artifactId>

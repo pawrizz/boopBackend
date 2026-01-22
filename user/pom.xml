@@ -9,7 +9,6 @@
     <groupId>boop</groupId>
     <artifactId>boop-care</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>user</artifactId>
@@ -42,6 +41,10 @@
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
 
   </dependencies>
