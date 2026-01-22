@@ -40,11 +40,7 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid login request");
         }
 
-        return new TokenResponse(jwt.generate(
-                user.getId(),
-                user.getRoles(),
-                user.getPermissions()
-        ));
+        return new TokenResponse("abc","cdf",30);
     }
 
     public void loginWithPhone(String phone)
@@ -58,11 +54,7 @@ public class AuthService {
         {
             User user = userService.authenticatePetOwner(phone);
 
-            return new TokenResponse(jwt.generate(
-                    user.getId(),
-                    user.getRoles(),
-                    user.getPermissions()
-            ));
+            return new TokenResponse("abc","cdf",30);
         }
 
         return null;

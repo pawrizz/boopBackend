@@ -7,7 +7,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
+import boop.auth.api.dto.TokenResponse;
 import java.util.*;
 
 @Component
@@ -39,5 +39,24 @@ public class JwtTokenProvider {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public TokenResponse generate(
+            Long userId,
+            Set<Role> roles,
+            Set<Permission> permissions) {
+
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + expiryMs);
+
+         Jwts.builder()
+                .setSubject(userId.toString())
+                .claim("roles", roles)
+                .claim("permissions", permissions)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .compact();
+        return new TokenResponse("abc","cdf",30);
     }
 }
