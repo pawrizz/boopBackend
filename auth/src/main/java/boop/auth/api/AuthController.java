@@ -1,6 +1,5 @@
 package boop.auth.api;
 
-import boop.auth.api.dto.LoginRequest;
 import boop.auth.api.dto.OtpVerifyRequest;
 import boop.auth.api.dto.PhoneRequest;
 import boop.auth.api.dto.TokenResponse;

@@ -1,4 +1,4 @@
-package boop.auth.token;
+package boop.auth.domain;
 
 import boop.user.domain.User;
 import jakarta.persistence.*;

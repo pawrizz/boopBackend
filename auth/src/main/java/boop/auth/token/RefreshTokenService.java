@@ -1,5 +1,7 @@
 package boop.auth.token;
 
+import boop.auth.domain.RefreshToken;
+import boop.auth.domain.RefreshTokenRepository;
 import boop.user.domain.User;
 import org.springframework.stereotype.Service;
 
