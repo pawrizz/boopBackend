@@ -3,6 +3,8 @@ package boop.user.domain;
 import boop.common.security.Permission;
 import boop.common.security.Role;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -64,10 +66,15 @@ public class User {
     @Column(name = "permission")
     private Set<Permission> permissions;
 
-    // ---------- getters & setters ----------
+    // Getters and Setters
+
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPhone() {

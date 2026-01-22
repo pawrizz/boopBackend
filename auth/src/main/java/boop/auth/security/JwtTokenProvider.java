@@ -2,7 +2,9 @@ package boop.auth.security;
 
 import boop.common.security.Permission;
 import boop.common.security.Role;
+import boop.user.domain.User;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,23 +19,20 @@ public class JwtTokenProvider {
     @Value("${security.jwt.expiry-ms}")
     private long expiryMs;
 
-    public String generate(
-            Long userId,
-            Set<Role> roles,
-            Set<Permission> permissions) {
+    public String generateAccessToken(User user) {
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", roles.stream().map(Enum::name).toList());
-        claims.put("permissions", permissions.stream().map(Enum::name).toList());
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + expiryMs);
 
         return Jwts.builder()
-                .setSubject(userId.toString())
-                .addClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiryMs))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .setSubject(user.getId().toString())
+                .claim("roles", user.getRoles())
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
+
 
     public Claims parse(String token) {
         return Jwts.parser()
