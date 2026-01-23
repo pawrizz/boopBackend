@@ -20,16 +20,20 @@ public class RefreshTokenService {
         this.repo = repo;
     }
 
-    public RefreshToken create(User user) {
+    public RefreshToken create(Long  userId,String refreshToken) {
 
         RefreshToken token = new RefreshToken();
+        User user = new User();
+        user.setId(userId);
         token.setUser(user);
-        token.setToken(UUID.randomUUID().toString());
+        token.setToken(refreshToken);
         token.setLastUsedAt(Instant.now());
         token.setExpiresAt(Instant.now().plus(WINDOW));
 
         return repo.save(token);
     }
+
+
 
     public RefreshToken verifyAndRotate(String tokenValue) {
 

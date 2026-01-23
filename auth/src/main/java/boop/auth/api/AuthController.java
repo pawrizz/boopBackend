@@ -1,10 +1,11 @@
 package boop.auth.api;
 
-import boop.auth.api.dto.OtpVerifyRequest;
-import boop.auth.api.dto.PhoneRequest;
+import boop.auth.api.dto.PhoneLoginRequest;
+import boop.auth.api.dto.PhoneVerifyRequest;
 import boop.auth.api.dto.TokenResponse;
 import boop.auth.service.AuthService;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -17,19 +18,28 @@ public class AuthController {
     }
 
     // Pet Owner
-    @PostMapping("/owner/token")
-    public void requestOtp(@RequestBody PhoneRequest req) {
+    @PostMapping("/petowner/login")
+    public void requestOtp(@RequestBody PhoneLoginRequest req) {
         authService.loginWithPhone(req.phone());
     }
 
-    @PostMapping("/owner/token/verify")
-    public TokenResponse verifyOtp(@RequestBody OtpVerifyRequest req) {
+    @PostMapping("/petowner/verify")
+    public TokenResponse verifyOtp(@RequestBody PhoneVerifyRequest req) {
         return authService.verifyOtpAndLogin(req.phone(), req.otp());
     }
+
+    // @PutMapping("petowner/{userId}/updateUser")
+    // public void putMethodName(@PathVariable String id, @RequestBody String entity) {
+    //     //TODO: process PUT request
+        
+    //     return entity;
+    // }
 
     // Doctor / Supplier / Admin
 //    @PostMapping("/login/password")
 //    public TokenResponse loginWithPassword(@RequestBody LoginRequest req) {
 //        return authService.loginWithPassword(req.email(), req.password());
 //    }
+
+
 }

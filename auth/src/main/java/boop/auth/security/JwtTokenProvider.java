@@ -5,9 +5,13 @@ import boop.common.security.Role;
 import boop.user.domain.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import boop.auth.api.dto.TokenResponse;
+import boop.auth.token.RefreshTokenService;
+
 import java.util.*;
 
 @Component
@@ -18,45 +22,67 @@ public class JwtTokenProvider {
 
     @Value("${security.jwt.expiry-ms}")
     private long expiryMs;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+    
 
-    public String generateAccessToken(User user) {
-
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + expiryMs);
-
-        return Jwts.builder()
-                .setSubject(user.getId().toString())
-                .claim("roles", user.getRoles())
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
-                .compact();
-    }
 
 
     public Claims parse(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(secret)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    public TokenResponse generate(
-            Long userId,
-            Set<Role> roles,
-            Set<Permission> permissions) {
+    public TokenResponse generateAccessToken(User user) {
 
+    return new TokenResponse(getAccessToken(user), null);
+    }
+
+    private String getAccessToken(User user) 
+    {
+        
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expiryMs);
 
-         Jwts.builder()
-                .setSubject(userId.toString())
-                .claim("roles", roles)
-                .claim("permissions", permissions)
+        String accessToken = Jwts.builder()
+                .setSubject(user.getId().toString())
+                .claim("roles", user.getRoles())
+                .claim("permissions", user.getPermissions())
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
-        return new TokenResponse("abc","cdf",30);
+    
+        return accessToken;
+
+    }
+
+    public TokenResponse generateRollingToken(User user) {
+
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + expiryMs);
+
+        String accessToken = getAccessToken(user);
+        String refreshToken = getRollingToken(user,expiryMs);
+        refreshTokenService.create(user.getId(),refreshToken);
+        return new TokenResponse(accessToken,null);
+    }
+
+    private String getRollingToken(User user,long expiryMs)
+    {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + expiryMs);
+
+        String accessToken = Jwts.builder()
+                .setSubject(user.getId().toString())
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .compact();
+    
+        return accessToken;
     }
 }

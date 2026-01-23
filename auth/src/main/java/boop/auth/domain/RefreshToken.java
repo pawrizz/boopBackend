@@ -20,8 +20,10 @@ public class RefreshToken {
     @Column(nullable = false, unique = true, length = 64)
     private String token;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
     private User user;
+
 
     @Column(nullable = false)
     private Instant expiresAt;

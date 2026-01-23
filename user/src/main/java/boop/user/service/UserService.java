@@ -49,7 +49,6 @@ public class UserService {
         return user;
     }
 
-    // ---------- PHONE + OTP (STUB FOR NOW) ----------
 
     public User authenticatePetOwner(String phone) {
 
@@ -62,7 +61,11 @@ public class UserService {
                     user.setPermissions(Set.of(Permission.PET_OWNER_FULL));
                     return repo.save(user);
                 });
+    }
 
-        // OTP validation will be implemented later
+    public User getPetOwnerUser(String phone) {
+
+        return repo.findByPhone(phone).orElseThrow(() ->
+                new RuntimeException("User not found"));
     }
 }

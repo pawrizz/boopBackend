@@ -2,7 +2,7 @@ package boop.auth.api.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public record OtpVerifyRequest(
+public record PhoneVerifyRequest(
         @NotNull
         String phone,
         @NotNull

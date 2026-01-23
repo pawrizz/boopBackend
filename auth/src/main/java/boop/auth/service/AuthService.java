@@ -1,6 +1,5 @@
 package boop.auth.service;
 
-import boop.auth.api.dto.LoginRequest;
 import boop.auth.api.dto.TokenResponse;
 import boop.auth.otp.OtpService;
 import boop.auth.security.JwtTokenProvider;
@@ -23,26 +22,6 @@ public class AuthService {
         this.otpService = otpService;
     }
 
-    public TokenResponse login(LoginRequest req) {
-
-        User user;
-
-        if (req.phone() != null) {
-
-            user = userService.authenticateByPhone(req.phone(), req.password());
-
-        } else if (req.email() != null) {
-
-            user = userService.authenticateByEmail(
-                    req.email(), req.password());
-
-        } else {
-            throw new IllegalArgumentException("Invalid login request");
-        }
-
-        return new TokenResponse("abc","cdf",30);
-    }
-
     public void loginWithPhone(String phone)
     {
         userService.authenticatePetOwner(phone);
@@ -52,11 +31,10 @@ public class AuthService {
     {
         if(otpService.verify(phone,otp))
         {
-            User user = userService.authenticatePetOwner(phone);
-
-            return new TokenResponse("abc","cdf",30);
+            User user = userService.getPetOwnerUser(phone);
+            return jwt.generateRollingToken(user);   
         }
-
+        
         return null;
     }
 }
