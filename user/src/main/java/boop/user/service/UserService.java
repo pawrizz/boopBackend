@@ -49,7 +49,7 @@ public class UserService {
         return user;
     }
 
-
+    @Transactional
     public User authenticatePetOwner(String phone) {
 
         return repo.findByPhone(phone)
@@ -59,6 +59,7 @@ public class UserService {
                     user.setPassword(null); // OTP-only user
                     user.setRoles(Set.of(Role.ROLE_PET_OWNER));
                     user.setPermissions(Set.of(Permission.PET_OWNER_FULL));
+                    user.setProvider("PHONE_OTP");
                     return repo.save(user);
                 });
     }

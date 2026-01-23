@@ -19,6 +19,7 @@
     <module>order</module>
     <module>appointment</module>
     <module>medical</module>
+    <module>assist</module>
   </modules>
 
   <!-- Centralized Versions -->
@@ -75,6 +76,11 @@
       <dependency>
         <groupId>boop</groupId>
         <artifactId>medical</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>boop</groupId>
+        <artifactId>assist</artifactId>
         <version>${project.version}</version>
       </dependency>
 
