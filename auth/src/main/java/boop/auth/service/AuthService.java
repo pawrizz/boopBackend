@@ -35,6 +35,6 @@ public class AuthService {
             return jwt.generateRollingToken(user);   
         }
         
-        return null;
+        throw new RuntimeException("Invalid OTP");
     }
 }

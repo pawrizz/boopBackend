@@ -6,6 +6,7 @@ import boop.user.domain.User;
 import boop.user.domain.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -50,9 +51,9 @@ public class UserService {
     }
 
     @Transactional
-    public User authenticatePetOwner(String phone) {
+    public void authenticatePetOwner(String phone) {
 
-        return repo.findByPhone(phone)
+        repo.findByPhone(phone)
                 .orElseGet(() -> {
                     User user = new User();
                     user.setPhone(phone);

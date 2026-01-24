@@ -68,7 +68,7 @@ public class JwtTokenProvider {
         String accessToken = getAccessToken(user);
         String refreshToken = getRollingToken(user,expiryMs);
         refreshTokenService.create(user.getId(),refreshToken);
-        return new TokenResponse(accessToken,null);
+        return new TokenResponse(accessToken,refreshToken);
     }
 
     private String getRollingToken(User user,long expiryMs)

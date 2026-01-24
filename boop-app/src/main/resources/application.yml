@@ -10,19 +10,19 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: public
+        default_schema: boop
 
 
 
 security:
   jwt:
-    secret: boop-secret-key-change-later
+    secret: this-is-my-super-secret-key-32-chars-long
     expiry-ms: 86400000
 
 
@@ -30,6 +30,8 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.tool.schema: DEBUG
+    org.springframework.web: DEBUG
+    io.jsonwebtoken: TRACE
 
 springdoc:
   packages-to-scan: boop

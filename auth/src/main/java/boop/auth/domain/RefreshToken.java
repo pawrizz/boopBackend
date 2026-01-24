@@ -17,7 +17,7 @@ public class RefreshToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 64)
+    @Column(nullable = false, unique = true, length = 2048)
     private String token;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -31,7 +31,7 @@ public class RefreshToken {
     @Column(nullable = false)
     private Instant lastUsedAt;
 
-    @Column(nullable = true)
+    @Column(nullable = true ,length = 512)
     private String deviceInfo;
     @Column(nullable = false)
     private Boolean revoked = false;
