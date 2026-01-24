@@ -1,7 +1,4 @@
 package boop.auth.security;
-
-import boop.common.security.Permission;
-import boop.common.security.Role;
 import boop.user.domain.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -29,11 +26,19 @@ public class JwtTokenProvider {
 
 
     public Claims parse(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secret)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secret)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            // Handle specifically if you want to trigger a refresh flow
+            throw new RuntimeException("Token has expired");
+        } catch (JwtException | IllegalArgumentException e) {
+            // Handle tampered tokens, malformed strings, etc.
+            throw new RuntimeException("Invalid token");
+        }
     }
 
     public TokenResponse generateAccessToken(User user) {
@@ -47,16 +52,14 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expiryMs);
 
-        String accessToken = Jwts.builder()
-                .setSubject(user.getId().toString())
+        return Jwts.builder()
+                .setSubject(user.getPublicId().toString())
                 .claim("roles", user.getRoles())
-                .claim("permissions", user.getPermissions())
+                .addClaims(Map.of("type", "ACCESS"))
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
-    
-        return accessToken;
 
     }
 
@@ -66,23 +69,22 @@ public class JwtTokenProvider {
         Date expiry = new Date(now.getTime() + expiryMs);
 
         String accessToken = getAccessToken(user);
-        String refreshToken = getRollingToken(user,expiryMs);
+        String refreshToken = getRefreshToken(user,expiryMs);
         refreshTokenService.create(user.getId(),refreshToken);
         return new TokenResponse(accessToken,refreshToken);
     }
 
-    private String getRollingToken(User user,long expiryMs)
+    private String getRefreshToken(User user,long expiryMs)
     {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expiryMs);
 
-        String accessToken = Jwts.builder()
-                .setSubject(user.getId().toString())
+        return Jwts.builder()
+                .setSubject(user.getPublicId().toString())
+                .claim("type", "REFRESH")
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
-    
-        return accessToken;
     }
 }

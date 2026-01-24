@@ -3,6 +3,7 @@ package boop.app.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(HttpClientErrorException.BadRequest.class)
     public ResponseEntity<?> handleRuntime(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)

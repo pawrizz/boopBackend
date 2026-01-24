@@ -35,3 +35,6 @@ logging:
 
 springdoc:
   packages-to-scan: boop
+  swagger-ui:
+   persistAuthorization: true
+

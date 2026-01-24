@@ -3,10 +3,9 @@ package boop.user.domain;
 import boop.common.security.Permission;
 import boop.common.security.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(
@@ -21,6 +20,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true, updatable = false)
+    private UUID publicId;
 
     /**
      * Mandatory for PetOwner / Caretaker / Delivery
@@ -66,6 +68,14 @@ public class User {
     @Column(name = "permission")
     private Set<Permission> permissions;
 
+    @PrePersist
+    protected void onCreate() {
+        if (this.publicId == null) {
+            this.publicId = UUID.randomUUID();
+        }
+    }
+
+
     // Getters and Setters
 
 
@@ -75,6 +85,13 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UUID getPublicId() {
+        return publicId;
+    }
+    public void setPublicId(UUID publicId) {
+        this.publicId = publicId;
     }
 
     public String getPhone() {
