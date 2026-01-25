@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import boop.auth.api.dto.TokenResponse;
 import boop.auth.token.RefreshTokenService;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Component
@@ -27,17 +29,18 @@ public class JwtTokenProvider {
 
     public Claims parse(String token) {
         try {
+            SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
             return Jwts.parserBuilder()
-                    .setSigningKey(secret)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
             // Handle specifically if you want to trigger a refresh flow
-            throw new RuntimeException("Token has expired");
+            throw new RuntimeException(e.getMessage());
         } catch (JwtException | IllegalArgumentException e) {
             // Handle tampered tokens, malformed strings, etc.
-            throw new RuntimeException("Invalid token");
+            throw new RuntimeException(e.getMessage());
         }
     }
 

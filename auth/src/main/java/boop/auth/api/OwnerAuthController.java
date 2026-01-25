@@ -34,10 +34,7 @@ public class OwnerAuthController {
         return authService.verifyOtpAndLogin(req.phone(), req.otp());
     }
 
-    @PostMapping("/logout")
-    public TokenResponse logoutUser(@AuthenticationPrincipal String publicId) {
-        return authService.verifyOtpAndLogin(publicId, null);
-    }
+
 
 
 
