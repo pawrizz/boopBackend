@@ -1,4 +1,4 @@
-package boop.auth.otp;
+package boop.auth.service;
 
 import org.springframework.stereotype.Service;
 

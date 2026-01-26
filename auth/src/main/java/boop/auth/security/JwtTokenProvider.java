@@ -1,13 +1,13 @@
 package boop.auth.security;
-import boop.user.domain.User;
+import boop.user.domain.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import boop.auth.api.dto.TokenResponse;
-import boop.auth.token.RefreshTokenService;
+import boop.auth.dto.TokenResponse;
+import boop.auth.service.RefreshTokenService;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -37,7 +37,7 @@ public class JwtTokenProvider {
                     .getBody();
         } catch (ExpiredJwtException e) {
             // Handle specifically if you want to trigger a refresh flow
-            throw new RuntimeException(e.getMessage());
+            throw e;
         } catch (JwtException | IllegalArgumentException e) {
             // Handle tampered tokens, malformed strings, etc.
             throw new RuntimeException(e.getMessage());

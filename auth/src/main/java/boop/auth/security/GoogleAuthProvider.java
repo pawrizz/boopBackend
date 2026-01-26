@@ -1,4 +1,4 @@
-package boop.auth.social;
+package boop.auth.security;
 
 public class GoogleAuthProvider {
 }

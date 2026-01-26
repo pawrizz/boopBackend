@@ -1,6 +1,6 @@
-package boop.auth.domain;
+package boop.auth.domain.entity;
 
-import boop.user.domain.User;
+import boop.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

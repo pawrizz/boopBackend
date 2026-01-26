@@ -1,9 +1,8 @@
 package boop.auth.service;
 
-import boop.auth.api.dto.TokenResponse;
-import boop.auth.otp.OtpService;
+import boop.auth.dto.TokenResponse;
 import boop.auth.security.JwtTokenProvider;
-import boop.user.domain.User;
+import boop.user.domain.entity.User;
 import boop.user.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +35,12 @@ public class AuthService {
         }
         
         throw new RuntimeException("Invalid OTP");
+    }
+
+    public TokenResponse verifyRefreshToken(String refreshToken)
+    {
+
+
+        throw new RuntimeException("Invalid Refresh Token");
     }
 }

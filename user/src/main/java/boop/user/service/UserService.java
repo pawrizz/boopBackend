@@ -2,8 +2,8 @@ package boop.user.service;
 
 import boop.common.security.Permission;
 import boop.common.security.Role;
-import boop.user.domain.User;
-import boop.user.domain.UserRepository;
+import boop.user.domain.entity.User;
+import boop.user.domain.repo.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

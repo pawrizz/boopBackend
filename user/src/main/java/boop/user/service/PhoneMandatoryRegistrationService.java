@@ -1,8 +1,8 @@
 package boop.user.service;
 
 import boop.user.api.dto.PhoneMandatoryRegistrationRequest;
-import boop.user.domain.User;
-import boop.user.domain.UserRepository;
+import boop.user.domain.entity.User;
+import boop.user.domain.repo.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

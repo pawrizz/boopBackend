@@ -1,4 +1,4 @@
-package boop.user.domain;
+package boop.user.domain.entity;
 
 import boop.common.security.Permission;
 import boop.common.security.Role;

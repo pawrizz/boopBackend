@@ -1,10 +1,9 @@
 package boop.auth.api;
 
-import boop.auth.api.dto.PhoneLoginRequest;
-import boop.auth.api.dto.PhoneVerifyRequest;
-import boop.auth.api.dto.TokenResponse;
+import boop.auth.dto.PhoneLoginRequest;
+import boop.auth.dto.PhoneVerifyRequest;
+import boop.auth.dto.TokenResponse;
 import boop.auth.service.AuthService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -29,10 +28,6 @@ public class OwnerAuthController {
         return authService.verifyOtpAndLogin(req.phone(), req.otp());
     }
 
-    @PostMapping("/refresh")
-    public TokenResponse validateRefresh(@RequestBody PhoneVerifyRequest req) {
-        return authService.verifyOtpAndLogin(req.phone(), req.otp());
-    }
 
 
 
